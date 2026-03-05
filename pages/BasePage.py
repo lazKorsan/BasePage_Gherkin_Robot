@@ -9,6 +9,9 @@ class BasePage:
     def get_url(self, url):
         self.driver.get(url)
 
+    def find_elements(self, locator):
+        return self.driver.find_elements(*locator)
+
     def click(self, locator):
         """
         locator: (By.XPATH, "xpath_adresi") şeklinde geliyor.

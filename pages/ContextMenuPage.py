@@ -2,10 +2,16 @@
 # C:\Users\user\PycharmProjects\use_BasePage\pages\ContextMenuPage.py
 # ContextMenuPage.py
 # C:\Users\user\PycharmProjects\use_BasePage\pages\ContextMenuPage.py
+import sys
+import os
+
+from pages.DriverManagerPage import DriverManagerPage
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from robot.api.deco import keyword
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.actions.action_builder import ActionBuilder
-from selenium.webdriver.common.actions.mouse_button import MouseButton
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoAlertPresentException
@@ -147,10 +153,7 @@ class ContextMenuPage(BasePage):
 
         return alert_text
 
-    def close_driver(self):
-        """Driver'ı kapatır"""
-        from utils.driver import Driver
-        Driver.close_driver()
+
 
 
 # Bağımsız test fonksiyonu
@@ -183,12 +186,14 @@ def test_context_menu():
     finally:
         # Driver'ı kapat
         print("🔚 Driver kapatılıyor...")
-        context_page.close_driver()
+        driver_manager.close_driver()
 
 
 # Eğer bu dosya doğrudan çalıştırılırsa
 if __name__ == "__main__":
     test_context_menu()
+
+
 
 
 

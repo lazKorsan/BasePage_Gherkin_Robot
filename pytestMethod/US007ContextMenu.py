@@ -1,3 +1,9 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from robot.api.deco import keyword
+
 from pages.ContextMenuPage import ContextMenuPage
 
 
@@ -30,9 +36,18 @@ def test_context_menu():
     finally:
         # Driver'ı kapat
         print("🔚 Driver kapatılıyor...")
-        context_page.close_driver()
+        driver_manager.close_driver()
 
 
 # Eğer bu dosya doğrudan çalıştırılırsa
 if __name__ == "__main__":
     test_context_menu()
+
+@keyword("Multi Method")
+def multi_method():
+    context_page=ContextMenuPage()
+    context_page.navigate_context_menu()
+    context_page.right_click_on_context_area()
+    context_page.get_alert_text()
+    context_page.accept_alert()
+

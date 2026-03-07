@@ -1,4 +1,10 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import time
+
+from robot.api.deco import keyword
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select, WebDriverWait
@@ -18,6 +24,7 @@ class DropdownPage(BasePage):
     option1 = (By.XPATH, '//select[@id="dropdown"]/option[@value="1"]')
     option2 = (By.XPATH, '//select[@id="dropdown"]/option[@value="2"]')
 
+    @keyword("Navigate Dropdown Page")
     def navigate_dropdown(self):
         """Dropdown sayfasına navigate et"""
         try:
@@ -34,6 +41,7 @@ class DropdownPage(BasePage):
         )
 
     # METHOD 1: Select sınıfı ile profesyonel seçim
+    @keyword("Select by value with Select class")
     def select_by_value_with_select_class(self, option_value="1"):
         """
         Selenium'un built-in Select sınıfını kullanarak dropdown seçimi

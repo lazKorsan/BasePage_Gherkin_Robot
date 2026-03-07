@@ -1,9 +1,18 @@
+import sys
+import os
+
+
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+import time
+
 from robot.api.deco import keyword
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-import time
 
 from pages.BasePage import BasePage
+
 from pages.DriverManagerPage import DriverManagerPage
 
 
@@ -50,45 +59,45 @@ class Drag_and_DropPage(BasePage):
     def drag_and_drop_method3(self):
         """JavaScript ile drag and drop (HTML5 drag and drop için)"""
         script = """
-        function createEvent(typeOfEvent) {
-            var event = document.createEvent("CustomEvent");
-            event.initCustomEvent(typeOfEvent, true, true, null);
-            event.dataTransfer = {
-                data: {},
-                setData: function(key, value) {
-                    this.data[key] = value;
-                },
-                getData: function(key) {
-                    return this.data[key];
+            function createEvent(typeOfEvent) {
+                var event = document.createEvent("CustomEvent");
+                event.initCustomEvent(typeOfEvent, true, true, null);
+                event.dataTransfer = {
+                    data: {},
+                    setData: function(key, value) {
+                        this.data[key] = value;
+                    },
+                    getData: function(key) {
+                        return this.data[key];
+                    }
+                };
+                return event;
+            }
+            function dispatchEvent(element, event, transferData) {
+                if (transferData !== undefined) {
+                    event.dataTransfer = transferData;
                 }
-            };
-            return event;
-        }
-        function dispatchEvent(element, event, transferData) {
-            if (transferData !== undefined) {
-                event.dataTransfer = transferData;
+                if (element.dispatchEvent) {
+                    element.dispatchEvent(event);
+                } else if (element.fireEvent) {
+                    element.fireEvent("on" + event.type, event);
+                }
             }
-            if (element.dispatchEvent) {
-                element.dispatchEvent(event);
-            } else if (element.fireEvent) {
-                element.fireEvent("on" + event.type, event);
-            }
-        }
 
-        var source = arguments[0];
-        var target = arguments[1];
+            var source = arguments[0];
+            var target = arguments[1];
 
-        var dragStartEvent = createEvent('dragstart');
-        dispatchEvent(source, dragStartEvent);
+            var dragStartEvent = createEvent('dragstart');
+            dispatchEvent(source, dragStartEvent);
 
-        var dropEvent = createEvent('drop');
-        dispatchEvent(target, dropEvent);
+            var dropEvent = createEvent('drop');
+            dispatchEvent(target, dropEvent);
 
-        var dragEndEvent = createEvent('dragend');
-        dispatchEvent(source, dragEndEvent);
+            var dragEndEvent = createEvent('dragend');
+            dispatchEvent(source, dragEndEvent);
 
-        return true;
-        """
+            return true;
+            """
 
         source = self.driver.find_element(*self.columnA)
         target = self.driver.find_element(*self.columnB)
@@ -160,6 +169,60 @@ class Drag_and_DropPage(BasePage):
         return False
 
 
+    @keyword("Drag and Drop Easy Way")
+    def drag_and_drop_easy_way(self):
+
+        drag_and_drop_page=Drag_and_DropPage()
+        try:
+            # Ana sayfaya git
+
+
+            # Drag and Drop sayfasına git
+            drag_and_drop_page.navigate_drag_and_drop()
+
+            # Başlangıç durumunu göster
+            print("\n📊 Başlangıç durumu:")
+            a, b = drag_and_drop_page.get_column_headers()
+            print(f"Sütun A: {a}, Sütun B: {b}")
+
+            # Drag and drop işlemini dene
+            print("\n🎯 Drag and drop işlemi başlatılıyor...")
+            success = drag_and_drop_page.drag_and_drop_with_retry(max_attempts=3)
+
+            # Son durumu göster
+            print("\n📊 Son durum:")
+            a, b = drag_and_drop_page.get_column_headers()
+            print(f"Sütun A: {a}, Sütun B: {b}")
+
+            if success:
+                print("\n✅ TEST BAŞARILI!")
+            else:
+                print("\n❌ TEST BAŞARISIZ!")
+
+        except Exception as e:
+            print(f"\n❌ Hata oluştu: {str(e)}")
+            import traceback
+
+            traceback.print_exc()
+
+        finally:
+            # Tarayıcıyı kapat
+            print("\n🔚 Tarayıcı kapatılıyor...")
+            # driver_manager_page.close_driver()
+
+
+def test_drag_and_drop_tc03():
+    driver_manager_page = DriverManagerPage()
+    drag_and_drop_page = Drag_and_DropPage()
+    driver_manager_page.navigate_heroku_homePage()
+    drag_and_drop_page.drag_and_drop_easy_way()
+    driver_manager_page.close_driver()
+
+
+
+
+
+
 if __name__ == "__main__":
     driver_manager_page = DriverManagerPage()
     drag_and_drop_page = Drag_and_DropPage()
@@ -200,50 +263,3 @@ if __name__ == "__main__":
         # Tarayıcıyı kapat
         print("\n🔚 Tarayıcı kapatılıyor...")
         driver_manager_page.close_driver()
-
-def drag_and_drop_Coulumn():
-    driver_manager_page = DriverManagerPage()
-    drag_and_drop_page = Drag_and_DropPage()
-
-    try:
-        # Ana sayfaya git
-        driver_manager_page.navigate_heroku_homePage()
-
-        # Drag and Drop sayfasına git
-        drag_and_drop_page.navigate_drag_and_drop()
-
-        # Başlangıç durumunu göster
-        print("\n📊 Başlangıç durumu:")
-        a, b = drag_and_drop_page.get_column_headers()
-        print(f"Sütun A: {a}, Sütun B: {b}")
-
-        # Drag and drop işlemini dene
-        print("\n🎯 Drag and drop işlemi başlatılıyor...")
-        success = drag_and_drop_page.drag_and_drop_with_retry(max_attempts=3)
-
-        # Son durumu göster
-        print("\n📊 Son durum:")
-        a, b = drag_and_drop_page.get_column_headers()
-        print(f"Sütun A: {a}, Sütun B: {b}")
-
-        if success:
-            print("\n✅ TEST BAŞARILI!")
-        else:
-            print("\n❌ TEST BAŞARISIZ!")
-
-    except Exception as e:
-        print(f"\n❌ Hata oluştu: {str(e)}")
-        import traceback
-
-        traceback.print_exc()
-
-    finally:
-        # Tarayıcıyı kapat
-        print("\n🔚 Tarayıcı kapatılıyor...")
-        driver_manager_page.close_driver()
-
-def test_drag_drap():
-    drag_and_drop_Coulumn()
-
-if __name__ == "__main__":
-    test_drag_drap()

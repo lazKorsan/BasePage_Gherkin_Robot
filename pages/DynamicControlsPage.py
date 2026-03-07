@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import time
 
 from robot.api.deco import keyword
@@ -23,7 +27,7 @@ class DynamicControlsPage(BasePage):
     disableButton=(By.XPATH,'//button[.="Disable"]')
     itIsDisabledMessage=(By.XPATH,'//*[@id="message"]')
 
-    keyword("Navigate Dynamic Controls Page")
+    @keyword("Navigate Dynamic Controls Page")
     def navigate_dynamic_controls(self):
         self.click(self.dynamicControlsButton)
     keyword("Click Checkbox")

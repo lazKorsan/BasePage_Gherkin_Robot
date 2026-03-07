@@ -1,3 +1,4 @@
+from utils.description_utils import description_utils
 from utils.driver import Driver
 from utils.click_utils import click_utils
 from utils.sendkey_utils import sendKey_utils
@@ -26,3 +27,7 @@ class BasePage:
         """
         xpath_value = locator[1]
         sendKey_utils(self.driver, xpath_value, text)
+    # todo burası sonradan eklendi
+    def descrip(self,locater):
+        xpath_value=locater[1]
+        description_utils(self.driver,xpath_value)

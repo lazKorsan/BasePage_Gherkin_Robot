@@ -1,0 +1,30 @@
+### Yeni Playwright Projesi İçin Yol Haritası
+
+Bu dosya, endüstri standartlarında modern bir test otomasyon projesi kurmak için temel adımları ve en iyi pratikleri özetlemektedir.
+
+**1. Proje Yapısı ve Araçlar:**
+*   **Araçlar:** Python, Playwright, Pytest (Test senaryolarını çalıştırmak için en popüler ve güçlü araç).
+*   **Klasör Yapısı:**
+    *   `tests/`: Tüm test senaryoları (`_test.py` ile biten dosyalar) burada yer alacak.
+    *   `pages/`: Page Object Model (POM) için sayfa sınıfları burada olacak.
+    *   `utils/`: Yardımcı fonksiyonlar veya genel araçlar (örn: tarih oluşturucu) burada olabilir.
+    *   `config.ini`: Proje konfigürasyonları (URL, kullanıcı bilgileri vb.) bu dosyada tutulacak.
+    *   `conftest.py`: Pytest'in "fixture"larını (otomatik tarayıcı açma/kapama gibi) barındıran merkezi dosya.
+
+**2. Kodlama Standartları (PEP 8):**
+*   **`snake_case` Kullanımı:** Değişken ve fonksiyon isimlerinde `degisken_adi`, `fonksiyon_adi` gibi `snake_case` kullanılacak.
+*   **Neden?** Playwright kütüphanesinin tüm fonksiyonları (`page.wait_for_selector`) bu formatta olduğu için kod tutarlılığı sağlanır ve profesyonel bir görünüm elde edilir.
+
+**3. Konfigürasyon Yönetimi (Koddan Ayırma):**
+*   Test URL'leri, kullanıcı adları, şifreler gibi hassas veya değişebilecek veriler asla kodun içine doğrudan yazılmamalıdır.
+*   Tüm bu bilgiler `config.ini` dosyasında saklanmalı ve kod içinden bu dosyadan okunmalıdır.
+
+**4. Otomatik Tarayıcı Yönetimi (Pytest Fixtures):**
+*   Her test senaryosundan önce tarayıcıyı açan ve test bittiğinde (başarılı ya da hatalı) otomatik olarak kapatan yapılar kurulmalıdır.
+*   Bu işlem, proje kök dizinindeki `conftest.py` dosyası içinde tanımlanan "fixture"lar ile yapılır. Bu, Behave'deki `environment.py` dosyasının modern ve daha güçlü karşılığıdır.
+
+**5. Raporlama:**
+*   Test sonuçlarını görsel olarak daha iyi analiz etmek için `pytest-html` gibi bir raporlama kütüphanesi projeye en başından dahil edilebilir.
+
+**6. Page Object Model (POM):**
+*   Mevcut projedeki başarılı POM yapısı, Playwright'ın komutları kullanılarak yeni projede de devam ettirilmelidir.

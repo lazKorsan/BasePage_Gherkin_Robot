@@ -1,5 +1,4 @@
 
-
   Feature:
     Scenario:
       * Navigate Heroku Home Page

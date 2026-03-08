@@ -6,8 +6,8 @@ from pages.DynamicContentPage import DynamicContentPage
 def step_impl(context):
     # Her senaryo için yeni bir sayfa nesnesi oluşturmak daha güvenli olabilir.
     # Bu, context'in testler arasında kirlenmesini önler.
-    context.dynamic_content_page = DynamicContentPage()
-    context.dynamic_content_page.navigate_dynamic_content()
+    context.page = DynamicContentPage()
+    context.page.navigate_dynamic_content()
 
 
 # Bu adımı 'then' olarak değiştirmek BDD prensiplerine daha uygun olur.
@@ -17,7 +17,7 @@ def step_impl(context):
     Sayfa içeriğinin değişip değişmediğini doğrular ve BDD adımını buna göre
     başarılı veya başarısız yapar.
     """
-    is_content_changed = context.dynamic_content_page.verify_dynamic_content_changed()
+    is_content_changed = context.page.verify_dynamic_content_changed()
     
     # assert, testin sonucunu belirler.
     # Eğer is_content_changed False ise, test bu adımda kalacaktır.

@@ -1,3 +1,4 @@
+from robot.api.deco import keyword
 from selenium.webdriver.common.by import By
 
 from pages.BasePage import BasePage
@@ -9,9 +10,10 @@ class EntryAdPage(BasePage):
     clickHereButton=(By.XPATH,'//a[.="Click here"]')
     entryAdCloseButton=(By.XPATH,'//p[.="Close"]')
 
+    @keyword("Navigate Entry Ad Page")
     def navigate_entry_ad_page(self):
         self.click(self.entryAdButton)
-
+    @keyword("Push Modal Close Button")
     def  push_modal_close_button(self):
         self.click(self.entryAdCloseButton)
 

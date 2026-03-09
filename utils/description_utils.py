@@ -993,12 +993,12 @@ if __name__ == "__main__":
     from description_utils import description_utils
 
     driver = webdriver.Chrome()
-    driver.get("https://www.example.com")
+    driver.get("https://the-internet.herokuapp.com/nested_frames")
 
     # (By, value) tuple ile:
     result = description_utils(
         driver,
-        locator=(By.ID, "submit-btn"),
+        locator=(By.ID, "content"),
         highlight_colour="#00BFFF",
         circle_colour="#FF6347",
     )

@@ -6,15 +6,13 @@ from pages.DriverManagerPage import DriverManagerPage
 
 
 class FramesPages(BasePage):
-    userNameBox = (By.XPATH, '//input[@id="username"]')
-    framePagesLinkButton=(By.XPATH,'//*[@id="content"]/ul/li[22]/a')
-    nestedFramesLinkButton=(By.XPATH,'//*[@href="/nested_frames"]')
-    iFramesLinkButton=(By.XPATH,'//*[@href="/iframe"]')
-    leftFramesLinkButton=(By.XPATH,'//frame[@src="/frame_left"]')
-    middleFrameLinkButton=(By.XPATH,'//*[@src="/frame_middle"]')
-    rightFrameLinkButton=(By.XPATH,'//*[@src="/frame_right"]')
-    bottomFrameLinkButton=(By.XPATH,'//frame[@src="/frame_bottom"]')
-    topFrameContainer=(By.XPATH,'//html/frameset/frame[1]')
+    frameTop=(By.XPATH, "//frame[@name='frame-top']")
+    frameBottom=(By.XPATH, "//frame[@name='frame-bottom']")
+    leftframetop=(By.XPATH, "//frame[@name='frame-left']")
+    middleframetop=(By.XPATH, "//frame[@name='frame-middle']")
+    rightframebottom=(By.XPATH, "//frame[@name='frame-right']")
+    leftLetter=(By.XPATH, "//body[text()='LEFT']")
+    middleLetter=(By.XPATH, "//div[@id='content' and text()='MIDDLE']")
 
     @keyword("Navigate to Frames Examples Pages")
     def navigate_to_frames_pages(self):

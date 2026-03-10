@@ -31,3 +31,12 @@ class BasePage:
     def descrip(self,locater):
         xpath_value=locater[1]
         description_utils(self.driver,xpath_value)
+
+    def switch_to_frame(self, frame_reference):
+        self.driver.switch_to.frame(frame_reference)
+
+    def switch_to_parent_frame(self):
+        self.driver.switch_to.parent_frame()
+
+    def switch_to_default_content(self):
+        self.driver.switch_to.default_content()
